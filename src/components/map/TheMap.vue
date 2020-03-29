@@ -1,11 +1,14 @@
 <template>
-  <l-map fadeAnimation zoomAnimation :center="center" :zoom="zoom">
+  <l-map
+    fadeAnimation
+    zoomAnimation
+    :center="center"
+    :zoom="zoom"
+    :min-zoom="zoom"
+    :max-zoom="zoom"
+  >
     <l-tile-layer :url="url" />
-    <l-marker
-      v-for="(ex, i) in experiences"
-      :key="`marker-${i}`"
-      :lat-lng="ex.center"
-    />
+    <l-marker v-for="(ex, i) in experiences" :key="`marker-${i}`" :lat-lng="ex.center" />
   </l-map>
 </template>
 

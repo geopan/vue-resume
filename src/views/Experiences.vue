@@ -1,12 +1,17 @@
 <template>
-  <v-container>
+  <v-container
+    fluid
+    fill-height
+    id="scroll-target"
+    style="max-height: 1400px"
+    class="overflow-y-auto"
+  >
+    <v-row v-scroll:#scroll-target="onScroll" style="height: 200px"></v-row>
     <v-row class="exp-view">
       <v-col cols="5">
-        <v-container id="scroll-timeline" class="timeline">
-          <timeline
-            :experiences="experiences"
-            v-scroll:#scroll-timeline="onScroll"
-          />
+        {{offsetTop}}
+        <v-container id="timeline" class="timeline">
+          <timeline :experiences="experiences" v-scroll:#scroll-timeline="onScroll" />
         </v-container>
       </v-col>
       <v-col cols="7">
@@ -91,6 +96,20 @@ export default {
   methods: {
     onScroll(e) {
       this.offsetTop = e.target.scrollTop;
+    }
+  },
+  created() {
+    this.$vuetify.goTo("#timeline");
+  },
+  watch: {
+    offsetTop(v) {
+      if (v <= 100) {
+        setTimeout(() => {
+          if (v <= 50) {
+            this.$router.push({ name: "landing" });
+          }
+        }, 1000);
+      }
     }
   }
 };
