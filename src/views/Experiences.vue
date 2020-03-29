@@ -10,7 +10,7 @@
         </v-container>
       </v-col>
       <v-col cols="7">
-        <the-map :experiences="experiences" />
+        <the-map :experiences="experiences" class="mapview" />
       </v-col>
     </v-row>
   </v-container>

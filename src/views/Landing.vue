@@ -1,24 +1,30 @@
 <template>
   <v-container fluid fill-height>
+    <v-row>
+      <v-col></v-col>
+    </v-row>
     <v-row align="center" justify="center">
       <v-col cols="12" class="text-center">
-        <v-avatar size="300">
+        <v-avatar size="270">
           <v-img src="@/assets/logo.png" />
         </v-avatar>
       </v-col>
-
       <v-col cols="12" class="text-center">
         <h1 class="display-2 font-weight-light mb-3">Guillaume</h1>
         <h1 class="display-1 font-weight-light mb-3">de Boyer-Montegut</h1>
-
         <p class="display-1">
           Senior Software Engineer
         </p>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row align="bottom" justify="center">
       <v-col cols="12" class="text-center">
         Scroll down
+      </v-col>
+    </v-row>
+    <v-row align="center" justify="center">
+      <v-col cols="12" class="text-center">
+        <v-card elevation="0" height="10000"> </v-card>
       </v-col>
     </v-row>
   </v-container>
