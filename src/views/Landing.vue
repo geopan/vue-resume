@@ -8,10 +8,10 @@
       </v-col>
 
       <v-col cols="12" class="text-center">
-        <h1 class="display-2 mb-3">Guillaume</h1>
-        <h1 class="display-1 mb-3">de Boyer-Montegut</h1>
+        <h1 class="display-2 font-weight-light mb-3">Guillaume</h1>
+        <h1 class="display-1 font-weight-light mb-3">de Boyer-Montegut</h1>
 
-        <p class="headline">
+        <p class="display-1">
           Senior Software Engineer
         </p>
       </v-col>

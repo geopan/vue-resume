@@ -1,5 +1,5 @@
 <template>
-  <l-map :center="center" :zoom="zoom">
+  <l-map fadeAnimation zoomAnimation :center="center" :zoom="zoom">
     <l-tile-layer :url="url" />
     <l-marker
       v-for="(ex, i) in experiences"
