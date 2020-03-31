@@ -1,5 +1,5 @@
 <template>
-  <v-card tile elevation="0" :height="400">
+  <v-card tile elevation="0" :min-height="height" @click="selectExp">
     <v-card-title class="pt-0">{{ company }}</v-card-title>
     <v-card-subtitle>{{ role }}</v-card-subtitle>
     <v-card-text>{{ formatDate(start) }} - {{ formatDate(end) }}</v-card-text>
@@ -13,11 +13,16 @@ import moment from "moment";
 export default {
   name: "ExperienceCard",
   props: {
+    id: Number,
     company: String,
     role: String,
     start: Date,
     end: Date,
-    summary: String
+    summary: String,
+    height: {
+      type: Number,
+      default: 200
+    }
   },
   computed: {
     duration() {
@@ -27,6 +32,9 @@ export default {
   methods: {
     formatDate(date) {
       return moment(date).format("MMM YYYY");
+    },
+    selectExp() {
+      this.$emit("selectExp", this.id);
     }
   }
 };

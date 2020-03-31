@@ -1,24 +1,23 @@
 <template>
-  <v-container
-    fluid
-    fill-height
-    id="scroll-target"
-    style="max-height: 1400px"
-    class="overflow-y-auto"
-  >
-    <v-row v-scroll:#scroll-target="onScroll" style="height: 200px"></v-row>
-    <v-row class="exp-view">
-      <v-col cols="5">
-        {{offsetTop}}
-        <v-container id="timeline" class="timeline">
-          <timeline :experiences="experiences" v-scroll:#scroll-timeline="onScroll" />
-        </v-container>
-      </v-col>
-      <v-col cols="7">
-        <the-map :experiences="experiences" class="mapview" />
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-row>
+    <v-col cols="5">
+      {{ offsetTop }}
+      <v-container fluid class="timeline" id="timeline">
+        <timeline
+          :experiences="experiences"
+          v-scroll:#timeline="onScroll"
+          @selectExp="selectExp"
+        />
+      </v-container>
+    </v-col>
+    <v-col cols="7">
+      <the-map
+        :selectedExp="selectedExp"
+        :experiences="experiences"
+        class="mapview"
+      />
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -28,6 +27,12 @@ import Timeline from "@/components/timeline/Timeline";
 export default {
   name: "Experiences",
   components: { TheMap, Timeline },
+  props: {
+    display: {
+      type: Boolean,
+      default: true
+    }
+  },
   data: () => ({
     experiences: [
       {
@@ -43,7 +48,8 @@ export default {
         role: "Senior Software Engineering",
         start: new Date("2018-06-01"),
         end: new Date("2019-08-01"),
-        center: [-33.8732279, 151.2077566]
+        center: [-33.8732279, 151.2077566],
+        mission: [{ loc: [] }]
       },
       {
         company: "HomeTrack",
@@ -61,7 +67,11 @@ export default {
         end: new Date("2018-06-01"),
         summary:
           "My responsibilities were to manage, design, develop and keep Vocus GIS up-to-date, available to the rest of the company and to continually improve it. This means developing solutions with my team to support Fibre Operations with data, tools, applications, analyses and APIs to keep GIS interconnected with others systems.",
-        center: [-33.8391957, 151.2042808]
+        center: [-33.8391957, 151.2042808],
+        missions: [
+          { loc: [-32.0397559, 115.6813467], name: "Perth" },
+          { loc: [-37.9716913, 144.7722849], name: "Melbourne" }
+        ]
       },
       {
         company: "Vocus",
@@ -82,34 +92,62 @@ export default {
         center: [43.5611567, 1.4760998]
       },
       {
+        company: "Jean Jaures University",
+        logo: "jean-jaures.png",
+        role: "Master's Degree, GIS",
+        start: new Date("2010-09-01"),
+        end: new Date("2011-06-01"),
+        summary: "",
+        center: [43.5791382, 1.400941]
+      },
+      {
+        company: "Paul Valery University",
+        logo: "paul-valery.png",
+        role: "Bachelor's Degree, GIS",
+        start: new Date("2009-09-01"),
+        end: new Date("2010-06-01"),
+        summary: "",
+        center: [43.632442, 3.8702447]
+      },
+      {
         company: "BRGM",
+        logo: "brgm.png",
         role: "GIS Analyst",
         start: new Date("2007-11-01"),
         end: new Date("2009-08-01"),
         summary:
           "The BRGM is France's leading public institution in Earth science applications for the management of surface and subsurface resources and risks. It provides the French geological survey.",
         center: [47.8299322, 1.9383028]
+      },
+      {
+        company: "Via Domitia University",
+        logo: "via-domitia.png",
+        role: "Advanced Diploma, GIS",
+        start: new Date("2007-09-01"),
+        end: new Date("2008-06-01"),
+        summary: "",
+        center: [43.1889087, 2.3408705]
+      },
+      {
+        company: "Jean Jaures University",
+        logo: "jean-jaures.png",
+        role: "Diploma of Geography",
+        start: new Date("2005-09-01"),
+        end: new Date("2007-06-01"),
+        summary: "",
+        center: [43.5791382, 1.400941]
       }
     ],
-    offsetTop: 0
+    offsetTop: 0,
+    selectedExp: 0
   }),
   methods: {
     onScroll(e) {
       this.offsetTop = e.target.scrollTop;
-    }
-  },
-  created() {
-    this.$vuetify.goTo("#timeline");
-  },
-  watch: {
-    offsetTop(v) {
-      if (v <= 100) {
-        setTimeout(() => {
-          if (v <= 50) {
-            this.$router.push({ name: "landing" });
-          }
-        }, 1000);
-      }
+      this.selectExp(parseInt(e.target.scrollTop / 200));
+    },
+    selectExp(id) {
+      this.selectedExp = id;
     }
   }
 };
@@ -117,7 +155,30 @@ export default {
 
 <style>
 .timeline {
-  height: 100%;
+  max-height: calc(60vh - 100px);
+  height: auto;
   overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.infinite-scroll {
+  min-height: "2280px";
+  display: flex;
+  /* overflow-y: auto; */
+}
+
+.mapview {
+  z-index: 1;
+
+  /* max-height: calc(100vh - 100px); */
+  /* height: auto; */
+
+  /* min-height: 20%; */
+  /* position: absolute; */
+  /* left: 0px;
+  right: 0px;
+  margin: 0px;
+  top: 0px;
+  bottom: 0px; */
 }
 </style>

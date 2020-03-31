@@ -3,14 +3,14 @@
     <v-timeline-item class="mb-6" hide-dot>
       <span>TODAY</span>
     </v-timeline-item>
-    <v-timeline-item v-for="(ex, i) in experiences" :key="`ex-${i}`">
+    <v-timeline-item v-for="(ex, id) in experiences" :key="`ex-${id}`">
       <template v-slot:icon>
         <v-avatar>
-          <img :src="getAvatar(ex.company)" />
+          <img :src="getAvatar(ex)" />
         </v-avatar>
       </template>
       <div>
-        <experience-card v-bind="ex" />
+        <experience-card v-bind="{ ...ex, id }" @selectExp="selectExp" />
       </div>
     </v-timeline-item>
   </v-timeline>
@@ -18,12 +18,6 @@
 
 <script>
 import ExperienceCard from "./ExperienceCard";
-
-// interface Experience {
-//   time: string;
-//   company: string;
-//   role: string;
-// }
 
 export default {
   name: "Timeline",
@@ -35,8 +29,14 @@ export default {
     }
   },
   methods: {
-    getAvatar(company) {
-      return require(`@/assets/company/${company.toLowerCase()}.png`);
+    getAvatar(ex) {
+      const { company, logo } = ex;
+      return require(`@/assets/company/${
+        logo ? logo : company.toLowerCase() + ".png"
+      }`);
+    },
+    selectExp(id) {
+      this.$emit("selectExp", id);
     }
   }
 };
